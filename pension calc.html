@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pension Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        label {
+            flex:1;
+            width: 100%;
+            display: block;
+            margin-bottom: 0px;
+            font-weight: bold;
+        }
+.form-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        input {
+            flex :1;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 0x;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pension Calculator</h1>
+
+    <div class="form-group"><label for="BPS">BPS</label>
+        <input type="number" id="BPS" placeholder="Enter your BPS" value=17></div>
+
+	 <div class="form-group"> <label for="dob">Date of Birth</label>
+        <input type="date" id="dob"></div>
+      <div class="form-group"><label for="dob">Date of Appointment</label>
+        <input type="date" id="doa"></div>
+      <div class="form-group"><label for="dob">Date of Retirement</label>
+        <input type="date" id="dor"></div>
+        <div class="form-group"> <label for="salary">Salary</label>
+        <input type="number" id="salary" placeholder="Enter your salary" value= 132856 ></div>
+      <div class="form-group"><label for="dos">Date of Superannuation</label>
+        <input type="date" id="dos" readonly></div>
+       <div class="form-group">
+        <label for="years">Age</label>
+        <input type="number" id="txtAge" readonly></div>
+      <div class="form-group">
+        <label for="years">Years of Service</label>
+        <input type="number" id="years" placeholder="Enter years of service" value="30" readonly> </div>
+       <div class="form-group">
+        <label for="years">Increment In The Year of Retirement</label>
+        <input type="number" id="IncyearofRetirement"   > </div>
+        <div class="form-group">
+        <label for="penalty">Early Retiremetn Penalty</label>
+        <input type="text" id="txtPenalty"  readonly > </div>
+       <div class="form-group">
+        <label for="GP">Gross Pension</label>
+        <input type="text" id="txtGP"  readonly > </div>
+        <div class="form-group">
+        <label for="MP">Monthly Pension</label>
+        <input type="text" id="monthlyPension"   > </div>
+        <div class="form-group">
+        <label for="commutattion">Commutation</label>
+        <input type="text" id="commutedValue"  readonly > </div>
+        <button onclick="calculatePension()">Calculate Pension</button>
+           <div class="result" id="result"></div>
+    </div>
+
+    <script>
+const ageRates = [
+  { age: 20, rate: 40.5043 },
+  { age: 21, rate: 39.7341 },
+  { age: 22, rate: 38.9653 } ,
+  { age: 23, rate: 38.1974 },
+  { age: 24, rate: 37.4307 },
+  { age: 25, rate: 36.6649 },
+  { age: 26, rate: 35.9001 },
+  { age: 27, rate: 35.1364 },
+  { age: 28, rate: 34.3736 },
+  { age: 29, rate: 33.6118 },
+  { age: 30, rate: 32.8509 },
+  { age: 31, rate: 32.0909 },
+  { age: 32, rate: 31.3319 },
+  { age: 33, rate: 30.5738 },
+  { age: 34, rate: 29.8166 },
+  { age: 35, rate: 29.0604 },
+  { age: 36, rate: 28.3051 },
+  { age: 37, rate: 27.5507 },
+  { age: 38, rate: 26.7972 },
+  { age: 39, rate: 26.0446 },
+  { age: 40, rate: 25.2929 },
+  { age: 41, rate: 24.5421 },
+  { age: 42, rate: 23.7922 },
+  { age: 43, rate: 23.0431 },
+  { age: 44, rate: 22.295 },
+  { age: 45, rate: 21.5477 },
+  { age: 46, rate: 20.8013 },
+  { age: 47, rate: 20.0558 },
+  { age: 48, rate: 19.3112 },
+  { age: 49, rate: 18.5674 },
+  { age: 50, rate: 17.8245 },
+  { age: 51, rate: 17.0825 },
+  { age: 52, rate: 16.3414 },
+  { age: 53, rate: 15.6011 },
+  { age: 54, rate: 14.8617 },
+  { age: 55, rate: 14.1232 },
+  { age: 56, rate: 13.3855 },
+  { age: 57, rate: 12.6487 },
+  { age: 58, rate: 11.9128 },
+  { age: 59, rate: 11.1777 },
+  { age: 60, rate: 12.3719 },
+  { age: 61, rate: 9.7102 },
+  { age: 62, rate: 8.9777 },
+  { age: 63, rate: 8.246 },
+  { age: 64, rate: 7.5152 },
+  { age: 65, rate: 6.7853 },
+  { age: 66, rate: 6.0561 },
+  { age: 67, rate: 5.3279 },
+  { age: 68, rate: 4.6005 },
+  { age: 69, rate: 3.874 },
+  { age: 70, rate: 3.1483 }
+];
+const increments = [
+  { bps: 1, increment: 430 },
+  { bps: 2, increment: 490 },
+  { bps: 3, increment: 580 },
+  { bps: 4, increment:  660},
+  { bps: 5, increment: 750 },
+  { bps: 6, increment: 840 },
+  { bps: 7, increment: 910 },
+  { bps: 8, increment: 1000 },
+  { bps: 9, increment: 1090 },
+  { bps: 10, increment: 1190 },
+  { bps: 11, increment: 1310 },
+  { bps: 12, increment: 1430 },
+  { bps: 13, increment: 1560},
+  { bps: 14, increment: 1740 },
+  { bps: 15, increment: 1980 },
+  { bps: 16, increment: 2260 },
+  { bps: 17, increment: 3420 },
+  { bps: 18, increment: 4260 },
+  { bps: 19, increment: 4530 },
+  { bps: 20, increment: 6690 },
+  { bps: 21, increment: 7420 },
+  { bps: 22, increment: 8710 },
+
+];
+
+/**
+ * Calculate age based on birth year and get the corresponding rate.
+ * @param {number} birthYear - The year of birth.
+ * @returns {number | string} - The corresponding rate or an error message.
+ */
+function getAgeRate(age) {
+
+  // Find the rate for the calculated age
+  const rateData = ageRates.find((item) => item.age === age);
+  if (rateData) {
+    return rateData.rate;
+  } else {
+    return "Rate not available for the calculated age.";
+  }
+}
+
+/** Example usage
+const birthYear = 60; // Replace with the desired birth year
+const rate = getAgeRate(birthYear);
+console.log(`The rate for birth year ${birthYear} is: ${rate}`);  */
+
+/**
+ * Fetch the increment based on BPS.
+ * @param {number} bps - The BPS value.
+ * @returns {number | string} - The corresponding increment or an error message.
+ */
+function getIncrement(bps) {
+  const incrementData = increments.find((item) => item.bps === bps);
+
+  if (incrementData) {
+    return incrementData.increment;
+  } else {
+    return "Increment not available for the given BPS.";
+  }
+}
+ /**
+const bps = 17; // Replace with the desired BPS value
+const increment = getIncrement(bps);
+console.log(`The increment for BPS ${bps} is: ${increment}`);
+
+*/
+
+     function calculatePension() {
+
+            const salary = parseFloat(document.getElementById('salary').value);
+            const years = parseFloat(document.getElementById('years').value);
+            const cdob = document.getElementById('dob').value;
+            const cdoa = document.getElementById('doa').value;
+            const cdos = document.getElementById('dos').value;
+            const cdor = document.getElementById('dor').value;
+            var birthDate = new Date(cdob);
+                        var dob=new Date(cdob) ;
+            const doa = new Date(cdoa);
+            var dor = new Date(cdor);
+            const dos=new Date(cdos)
+            var penalty=0    ;
+            var inc=0;
+            var today = new Date();
+            if (isNaN(salary) || isNaN(years)) {
+                document.getElementById('result').textContent = 'Please enter valid inputs!';
+                return;
+		    }
+            // Date of appointment can not be before date of birth
+
+            if(doa <= dob)
+            {
+                alert("Date of appointment can not be before or equal to date of birth");
+                return;
+            }
+
+            // Calculate Age
+            var age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+           if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            document.getElementById('txtAge').value=age;
+            // calculate years of service
+            var service = dor.getFullYear() - doa.getFullYear();
+            const monthsDiff = dor.getMonth() - doa.getMonth();
+            if (monthsDiff < 0 || (monthsDiff === 0 && today.getDate() < birthDate.getDate())) {
+                service--;
+            }
+
+            // Calculate years of service
+            const retirement = new Date(dor);
+            const appointment = new Date(doa);
+            var yearsOfService = parseInt(retirement.getFullYear() - appointment.getFullYear() - (retirement < new Date(retirement.getFullYear(), appointment.getMonth(), appointment.getDate()) ? 1 : 0));
+              document.getElementById('years').value = yearsOfService;
+              if (yearsOfService > 30)
+                   yearsOfService=yearsOfService-30;
+            // Add 60 years to the date of birth
+            const retirementDate = new Date(birthDate);
+            retirementDate.setFullYear(retirementDate.getFullYear() + 60);
+            retirementDate.setDate(retirementDate.getDate() - 1);
+            const retirementDateString = retirementDate.toISOString().split('T')[0];
+            document.getElementById('dos').value = retirementDateString;
+            // Find increment in the year of retirement
+            dor = new Date(document.getElementById('dor').value);
+
+            if (dor.getMonth()+1 >= 6 && dor.getMonth()+1 <=11) {
+            var grade= parseInt(document.getElementById('BPS').value);
+
+            inc=getIncrement(grade);
+
+            //Find Age Rate for Commutation
+            }
+            else
+            {
+                inc=0;
+            }
+            document.getElementById('IncyearofRetirement').value=inc;
+            const ageRate=getAgeRate(age+1);
+
+              // Pension Calculations
+
+               var GrossPension = ((salary- (salary *3.27/100))* yearsOfService* 7/300 );
+
+             GrossPension = GrossPension+inc;
+             if (dor > dos) {
+                alert("The retirement date cannot be after the superannuation date.");
+
+            }
+            else
+            {
+
+            const yearsDifference = dos.getFullYear() - dor.getFullYear();
+            const monthsDifference = (dos.getMonth()+1) - (dor.getMonth()+1);
+
+            const totalMonths = (yearsDifference * 12) + monthsDifference;
+
+           if (totalMonths  >= 6.7 ){
+                           penalty= (GrossPension *20/100);
+           }
+           else {
+
+               penalty= (GrossPension *(totalMonths *0.25)/100);
+           }
+
+             }
+
+             document.getElementById('txtPenalty').value=formatNumber(parseInt(penalty));
+             GrossPension= GrossPension-penalty;
+             document.getElementById('txtGP').value  =formatNumber(parseInt(GrossPension));
+          	var MonthlyPension= GrossPension *65/100;
+            // Apply increases
+                      MonthlyPension=MonthlyPension + (MonthlyPension*15/100) ; //2011
+                      MonthlyPension=MonthlyPension + (MonthlyPension*7.5/100) ; //2015
+                      MonthlyPension=MonthlyPension + (MonthlyPension*15/100) ; //2022
+                      MonthlyPension=MonthlyPension + (MonthlyPension*17.5/100) ; //2023
+                      MonthlyPension=MonthlyPension + (MonthlyPension*15/100) ; //2011
+		    const Commutation= (GrossPension*35/100) * 12* ageRate;
+            document.getElementById('monthlyPension').value=formatNumber(parseInt(MonthlyPension));
+            var x =formatNumber(parseInt(Commutation));
+           document.getElementById('commutedValue').value=  x ;
+           // document.getElementById('result').textContent = `Your Pension: $${MonthlyPension.toFixed(2)}\nDate of Birth: ${dob}\n Your age: ${age}`;
+        }
+        //end of calculate Pension
+       function formatNumber(num) {
+
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+// Set default date of birth on page load
+        window.onload = function () {
+           const today=new Date();
+            document.getElementById('dos').value=today.toISOString().split('T')[0];
+            document.getElementById('dor').value=today.toISOString().split('T')[0];
+
+            const superannuationDateInput = document.getElementById('dos').value;
+            const superannuationDate = new Date(superannuationDateInput);
+
+            const birthDate = new Date(superannuationDate);
+            birthDate.setFullYear(birthDate.getFullYear() - 60) ;
+	        birthDate.setDate(birthDate.getDate() + 1); // Add one day
+            var birthDateString = birthDate.toISOString().split('T')[0];
+            document.getElementById('dob').value = birthDateString;
+//Set date of appointment to 30 years after Date of Birth
+
+            const doa = new Date(document.getElementById('dob').value);
+
+            doa.setFullYear(birthDate.getFullYear() +30) ;
+	    //doa.setDate(birthDate.getDate()); // set date of appointment after 30 years of date of birthdate
+             birthDateString = doa.toISOString().split('T')[0];
+            document.getElementById('doa').value = birthDateString;
+
+        };
+
+        // Change superannuation date on change of date of birth
+         document.getElementById('dob').addEventListener('change', function() {
+            const dateOfBirth = new Date(this.value);
+            if (!isNaN(dateOfBirth)) {
+                var superannuationDate = new Date(dateOfBirth);
+                superannuationDate.setFullYear(superannuationDate.getFullYear() + 60); // Assuming superannuation age is 60 years
+                 superannuationDate.setDate(superannuationDate.getDate() - 1); // Subtract one day
+                const formattedDate = superannuationDate.toISOString().split('T')[0];
+                document.getElementById('dos').value = formattedDate;
+            }
+        });
+       /*
+        document.getElementById('dateForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const retirementDate = new Date(document.getElementById('retirementDate').value);
+            const superannuationDate = new Date(document.getElementById('superannuationDate').value);
+
+            if (retirementDate > superannuationDate) {
+                document.getElementById('result').textContent = "The retirement date cannot be after the superannuation date.";
+                return;
+            }
+
+            const yearsDifference = superannuationDate.getFullYear() - retirementDate.getFullYear();
+            const monthsDifference = superannuationDate.getMonth() - retirementDate.getMonth();
+
+            const totalMonths = (yearsDifference * 12) + monthsDifference;
+
+            document.getElementById('result').textContent = `The difference is ${totalMonths} month(s).`;
+        });   */
+
+
+
+    </script>
+</body>
+</html>
