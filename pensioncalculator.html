@@ -63,6 +63,9 @@
             text-align: center;
             font-weight: bold;
         }
+        input[type=number]:focus {
+  background-color: lightblue;
+}
     </style>
 </head>
 <body>
@@ -70,7 +73,7 @@
         <h1>Finance Division's Pension Calculator</h1>
 
     <div class="form-group"><label for="BPS">BPS</label>
-        <input type="number" id="BPS" placeholder="Enter your BPS" ></div>
+        <input type="number" id="BPS" placeholder="Enter your BPS"  min="1" max="22"></div>
 
 	 <div class="form-group"> <label for="dob">Date of Birth</label>
         <input type="date" id="dob" placeholder="Enter Date of Birthday"></div>
@@ -224,6 +227,48 @@ function getIncrement(bps) {
     return "Increment not available for the given BPS.";
   }
 }
+function validations(){
+    const bps=     parseInt(document.getElementById('BPS').value);
+    const salary = parseFloat(document.getElementById('salary').value);
+            const years = parseFloat(document.getElementById('years').value);
+            const cdob = document.getElementById('dob').value;
+            const cdoa = document.getElementById('doa').value;
+            const cdos = document.getElementById('dos').value;
+            const cdor = document.getElementById('dor').value;
+            const dob= new Date(cdob);
+            const doa= new Date(cdoa);
+            const dor =new Date(cdor);
+
+        if (isNaN(bps) ) {
+                //document.getElementById('result').textContent = 'Please enter valid inputs!';
+                alert("Please enter BPS");
+                           document.getElementById('BPS').focus();
+                return false;
+		    }
+
+             if (isNaN(dob) ) {
+                //document.getElementById('result').textContent = 'Please enter valid inputs!';
+                alert("Please enter Date of Birth");
+                return false;
+		    }
+              if (isNaN(doa) ) {
+                //document.getElementById('result').textContent = 'Please enter valid inputs!';
+                alert("Please enter Date of Appointment");
+                return false;
+		    }
+
+            if (isNaN(dor) ) {
+                //document.getElementById('result').textContent = 'Please enter valid inputs!';
+                alert("Please enter Date of Retirement");
+                return false;
+		    }
+             if (isNaN(salary) ) {
+                //document.getElementById('result').textContent = 'Please enter valid inputs!';
+                alert("Please enter Basic Pay");
+                return false;
+		    }
+            return true;
+}
  /**
 const bps = 17; // Replace with the desired BPS value
 const increment = getIncrement(bps);
@@ -231,7 +276,10 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
 
 */
 
+
      function calculatePension() {
+         if (! validations())
+             return;
 
             const salary = parseFloat(document.getElementById('salary').value);
             const years = parseFloat(document.getElementById('years').value);
@@ -247,8 +295,9 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
             var penalty=0    ;
             var inc=0;
             var today = new Date();
-            if (isNaN(salary) || isNaN(years)) {
-                document.getElementById('result').textContent = 'Please enter valid inputs!';
+            if (isNaN(salary) ) {
+                //document.getElementById('result').textContent = 'Please enter valid inputs!';
+                alert("Please enter Basic Pay calc");
                 return;
 		    }
             // Date of appointment can not be before date of birth
@@ -274,12 +323,20 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
             }
 
             // Calculate years of service
+
+
             const retirement = new Date(dor);
             const appointment = new Date(doa);
             var yearsOfService = parseInt(retirement.getFullYear() - appointment.getFullYear() - (retirement < new Date(retirement.getFullYear(), appointment.getMonth(), appointment.getDate()) ? 1 : 0));
-              document.getElementById('years').value = yearsOfService;
+               // document.getElementById('doa').value=yearsOfService;
+           // const retirement = new Date(dor);
+            //const appointment = new Date(doa);
+            //var yearsOfService = parseInt(retirement.getFullYear() - appointment.getFullYear() - (retirement < new Date(retirement.getFullYear(), appointment.getMonth(), appointment.getDate()) ? 1 : 0));
+            //  var yearsOfService = document.getElementById('years').value;
               if (yearsOfService > 30)
                    yearsOfService=yearsOfService-30;
+                   document.getElementById('years').value = yearsOfService;
+
             // Add 60 years to the date of birth
             const retirementDate = new Date(birthDate);
             retirementDate.setFullYear(retirementDate.getFullYear() + 60);
@@ -388,6 +445,14 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
                 document.getElementById('dos').value = formattedDate;
             }
         });
+          document.getElementById('BPS').addEventListener('change', function() {
+
+                if (     (parseInt(document.getElementById('BPS').value) > 22   )  ||  (parseInt(document.getElementById('BPS').value) < 1   ) )
+                        alert("Enter BPS between 1 and 22");
+                        document.getElementById('BPS').focus();
+            }
+        );
+
 
 
 
