@@ -39,7 +39,7 @@
         input {
             flex :1;
             width: 100%;
-            padding: 10px;
+           padding: 10px;
             margin-bottom: 0x;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -73,13 +73,13 @@
         <input type="number" id="BPS" placeholder="Enter your BPS" ></div>
 
 	 <div class="form-group"> <label for="dob">Date of Birth</label>
-        <input type="date" id="dob"></div>
+        <input type="date" id="dob" placeholder="Enter Date of Birthday"></div>
       <div class="form-group"><label for="dob">Date of Appointment</label>
-        <input type="date" id="doa"></div>
+        <input type="date" id="doa" placeholder="Enter date of Appointment"></div>
       <div class="form-group"><label for="dob">Date of Retirement</label>
-        <input type="date" id="dor"></div>
-        <div class="form-group"> <label for="salary">Salary</label>
-        <input type="number" id="salary" placeholder="Enter your salary" ></div>
+        <input type="date" id="dor" placeholder="Enter date of retirement"></div>
+        <div class="form-group"> <label for="salary">Basic Pay + Personal Pay</label>
+        <input type="number" id="salary"  placeholder="Enter Basic Pay + Personal Pay"></div>
       <div class="form-group"><label for="dos">Date of Superannuation</label>
         <input type="date" id="dos" readonly></div>
        <div class="form-group">
@@ -87,7 +87,7 @@
         <input type="number" id="txtAge" readonly></div>
       <div class="form-group">
         <label for="years">Years of Service</label>
-        <input type="number" id="years" placeholder="Enter years of service"  readonly> </div>
+        <input type="number" id="years"  readonly> </div>
        <div class="form-group">
         <label for="years">Increment In The Year of Retirement</label>
         <input type="number" id="IncyearofRetirement"   > </div>
@@ -108,7 +108,7 @@
     </div>
 
     <script>
-    
+
 
 const ageRates = [
   { age: 20, rate: 40.5043 },
@@ -353,8 +353,8 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
         }
 
 // Set default date of birth on page load
-        window.onload = function () {
-           const today=new Date();
+      /**  window.onload = function () {
+          const today=new Date();
             document.getElementById('dos').value=today.toISOString().split('T')[0];
             document.getElementById('dor').value=today.toISOString().split('T')[0];
 
@@ -375,7 +375,7 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
              birthDateString = doa.toISOString().split('T')[0];
             document.getElementById('doa').value = birthDateString;
 
-        };
+        };   */
 
         // Change superannuation date on change of date of birth
          document.getElementById('dob').addEventListener('change', function() {
@@ -388,25 +388,8 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
                 document.getElementById('dos').value = formattedDate;
             }
         });
-       /*
-        document.getElementById('dateForm').addEventListener('submit', function(event) {
-            event.preventDefault();
 
-            const retirementDate = new Date(document.getElementById('retirementDate').value);
-            const superannuationDate = new Date(document.getElementById('superannuationDate').value);
 
-            if (retirementDate > superannuationDate) {
-                document.getElementById('result').textContent = "The retirement date cannot be after the superannuation date.";
-                return;
-            }
-
-            const yearsDifference = superannuationDate.getFullYear() - retirementDate.getFullYear();
-            const monthsDifference = superannuationDate.getMonth() - retirementDate.getMonth();
-
-            const totalMonths = (yearsDifference * 12) + monthsDifference;
-
-            document.getElementById('result').textContent = `The difference is ${totalMonths} month(s).`;
-        });   */
 
 
 
