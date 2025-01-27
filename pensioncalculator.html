@@ -70,7 +70,7 @@
         <h1>Finance Division's Pension Calculator</h1>
 
     <div class="form-group"><label for="BPS">BPS</label>
-        <input type="number" id="BPS" placeholder="Enter your BPS" value=17></div>
+        <input type="number" id="BPS" placeholder="Enter your BPS" ></div>
 
 	 <div class="form-group"> <label for="dob">Date of Birth</label>
         <input type="date" id="dob"></div>
@@ -79,7 +79,7 @@
       <div class="form-group"><label for="dob">Date of Retirement</label>
         <input type="date" id="dor"></div>
         <div class="form-group"> <label for="salary">Salary</label>
-        <input type="number" id="salary" placeholder="Enter your salary" value= 132856 ></div>
+        <input type="number" id="salary" placeholder="Enter your salary" ></div>
       <div class="form-group"><label for="dos">Date of Superannuation</label>
         <input type="date" id="dos" readonly></div>
        <div class="form-group">
@@ -87,7 +87,7 @@
         <input type="number" id="txtAge" readonly></div>
       <div class="form-group">
         <label for="years">Years of Service</label>
-        <input type="number" id="years" placeholder="Enter years of service" value="30" readonly> </div>
+        <input type="number" id="years" placeholder="Enter years of service"  readonly> </div>
        <div class="form-group">
         <label for="years">Increment In The Year of Retirement</label>
         <input type="number" id="IncyearofRetirement"   > </div>
@@ -108,61 +108,63 @@
     </div>
 
     <script>
+    
+
 const ageRates = [
   { age: 20, rate: 40.5043 },
   { age: 21, rate: 39.7341 },
   { age: 22, rate: 38.9653 } ,
   { age: 23, rate: 38.1974 },
   { age: 24, rate: 37.4307 },
-  { age: 25, rate: 36.6649 },
-  { age: 26, rate: 35.9001 },
-  { age: 27, rate: 35.1364 },
-  { age: 28, rate: 34.3736 },
-  { age: 29, rate: 33.6118 },
-  { age: 30, rate: 32.8509 },
-  { age: 31, rate: 32.0909 },
-  { age: 32, rate: 31.3319 },
-  { age: 33, rate: 30.5738 },
-  { age: 34, rate: 29.8166 },
-  { age: 35, rate: 29.0604 },
-  { age: 36, rate: 28.3051 },
-  { age: 37, rate: 27.5507 },
-  { age: 38, rate: 26.7972 },
-  { age: 39, rate: 26.0446 },
-  { age: 40, rate: 25.2929 },
-  { age: 41, rate: 24.5421 },
-  { age: 42, rate: 23.7922 },
-  { age: 43, rate: 23.0431 },
-  { age: 44, rate: 22.295 },
-  { age: 45, rate: 21.5477 },
-  { age: 46, rate: 20.8013 },
-  { age: 47, rate: 20.0558 },
-  { age: 48, rate: 19.3112 },
-  { age: 49, rate: 18.5674 },
-  { age: 50, rate: 17.8245 },
-  { age: 51, rate: 17.0825 },
-  { age: 52, rate: 16.3414 },
-  { age: 53, rate: 15.6011 },
-  { age: 54, rate: 14.8617 },
-  { age: 55, rate: 14.1232 },
-  { age: 56, rate: 13.3855 },
-  { age: 57, rate: 12.6487 },
-  { age: 58, rate: 11.9128 },
-  { age: 59, rate: 11.1777 },
-  { age: 60, rate: 12.3719 },
-  { age: 61, rate: 9.7102 },
-  { age: 62, rate: 8.9777 },
-  { age: 63, rate: 8.246 },
-  { age: 64, rate: 7.5152 },
-  { age: 65, rate: 6.7853 },
-  { age: 66, rate: 6.0561 },
-  { age: 67, rate: 5.3279 },
-  { age: 68, rate: 4.6005 },
-  { age: 69, rate: 3.874 },
-  { age: 70, rate: 3.1483 }
+  { age: 25, rate: 36.6651 },
+  { age: 26, rate: 35.9006 },
+  { age: 27, rate: 35.1372 },
+  { age: 28, rate: 34.3750 },
+  { age: 29, rate: 33.6143 },
+  { age: 30, rate: 32.8071 },
+  { age: 31, rate: 32.0974 },
+  { age: 32, rate: 31.3412 },
+  { age: 33, rate: 30.5869 },
+  { age: 34, rate: 29.8343 },
+  { age: 35, rate: 25.0841 },
+  { age: 36, rate: 28.3362 },
+  { age: 37, rate: 27.5908 },
+  { age: 38, rate: 26.8482 },
+  { age: 39, rate: 26.1009 },
+  { age: 40, rate: 25.3728 },
+  { age: 41, rate: 24.6406 },
+  { age: 42, rate: 23.9126 },
+  { age: 43, rate: 23.1840  },
+  { age: 44, rate: 22.4713 },
+  { age: 45, rate: 21.7592 },
+  { age: 46, rate: 21.0538 },
+  { age: 47, rate: 20.3555 },
+  { age: 48, rate: 19.6653 },
+  { age: 49, rate: 18.9841  },
+  { age: 50, rate: 18.3192 },
+  { age: 51, rate: 17.6526 },
+  { age: 52, rate: 17.0050 },
+  { age: 53, rate: 16.3710 },
+  { age: 54, rate: 15.7517 },
+  { age: 55, rate: 15.1478 },
+  { age: 56, rate: 14.5602 },
+  { age: 57, rate: 13.9888 },
+  { age: 58, rate: 13.4340 },
+  { age: 59, rate: 12.8953 },
+  { age: 60, rate: 12.3719},
+  { age: 61, rate: 11.8632 },
+  { age: 62, rate: 11.3684 },
+  { age: 63, rate: 10.8872 },
+  { age: 64, rate: 10.4191 },
+  { age: 65, rate: 9.9639 },
+  { age: 66, rate: 9.5214 },
+  { age: 67, rate: 9.0914 },
+  { age: 68, rate: 8.6742 },
+  { age: 69, rate: 8.2697 },
+  { age: 70, rate: 7.8778 }
 ];
 const increments = [
-  { bps: 1, increment: 430 },
+  {bps: 1, increment: 430 },
   { bps: 2, increment: 490 },
   { bps: 3, increment: 580 },
   { bps: 4, increment:  660},
