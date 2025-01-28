@@ -343,6 +343,7 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
                 age--;
             }
+           
             document.getElementById('txtAge').value=age;
             // calculate years of service
             var service = dor.getFullYear() - doa.getFullYear();
@@ -482,12 +483,19 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
              });*/
          document.getElementById('dob').addEventListener('change', function() {
             const dateOfBirth = new Date(this.value);
+            const today=new Date();
             if (!isNaN(dateOfBirth)) {
                 var superannuationDate = new Date(dateOfBirth);
                 superannuationDate.setFullYear(superannuationDate.getFullYear() + 60); // Assuming superannuation age is 60 years
                  superannuationDate.setDate(superannuationDate.getDate() - 1); // Subtract one day
                 const formattedDate = superannuationDate.toISOString().split('T')[0];
                 document.getElementById('dos').value = formattedDate;
+                 var age = today.getFullYear() - dateOfBirth.getFullYear();
+            const monthDiff = today.getMonth() - dateOfBirth.getMonth();
+           if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dateOfBirth.getDate())) {
+                age--;
+            }
+            document.getElementById('txtAge').value=age;
             }
         });
         /**
