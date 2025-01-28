@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            padding: 20px;
+            padding: 2px;
             background-color: #f4f4f9;
         }
         .container {
@@ -18,6 +18,7 @@
             background: #ffffff;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            align-items: center;
         }
         h1 {
             font-size: 1.5rem;
@@ -34,7 +35,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
         input {
             flex :1;
@@ -58,59 +59,87 @@
             background-color: #0056b3;
         }
         .result {
-            margin-top: 20px;
-            font-size: 1.2rem;
+            margin-top: 10px;
+            font-size: 0.75rem;
             text-align: center;
             font-weight: bold;
+            color: red;
         }
         input[type=number]:focus {
-  background-color: lightblue;
-}
+         background-color: lightblue;
+        }
+         .required {
+            color: red;  /* Change the color to red for the asterisk */
+            margin-left: 4px; /* Add some space between the textbox and the asterisk */
+            font-size: 2rem;
+        }
+        .requiredSp {
+            color: White;  /* Change the color to red for the asterisk */
+            margin-left: 4px; /* Add some space between the textbox and the asterisk */
+            font-size: 2rem;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Finance Division's Pension Calculator</h1>
+    <div class="container" >
+      <center>  <h3>Government of Pakistan <BR>
+            Finance Division <BR>
+            Pension Calculator</h3>
+            <BR> </center>
 
     <div class="form-group"><label for="BPS">BPS</label>
-        <input type="number" id="BPS" placeholder="Enter your BPS"  title = "Enter BPS" min="1" max="22"></div>
-
+        <input type="number" id="BPS" placeholder="Enter your BPS"  title = "Enter BPS" min="1" max="22">
+            <span class="required">*</span> <!-- The red asterisk -->
+     </div>
 	 <div class="form-group"> <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" placeholder="Enter Date of Birth" title = "Enter date of birth"></div>
+        <input type="date" id="dob" placeholder="Enter Date of Birth" title = "Enter date of birth">
+        <span class="required">*</span> <!-- The red asterisk --></div>
       <div class="form-group"><label for="dob">Date of Appointment</label>
-        <input type="date" id="doa" placeholder="Enter date of Appointment"></div>
+        <input type="date" id="doa" placeholder="Enter date of Appointment"  title = "Enter date of Appointment">
+        <span class="required">*</span> <!-- The red asterisk --></div>
       <div class="form-group"><label for="dob">Date of Retirement</label>
-        <input type="date" id="dor" placeholder="Enter date of retirement"></div>
-        <div class="form-group"> <label for="salary">Basic Pay + Personal Pay</label>
-        <input type="number" id="salary"  placeholder="Enter Basic Pay + Personal Pay"></div>
+        <input type="date" id="dor" placeholder="Enter date of retirement"  title = "Enter date of Retirement">
+        <span class="required">*</span> <!-- The red asterisk --></div>
+        <div class="form-group"> <label for="salary">Last Drawn Basic Pay</label>
+        <input type="number" id="salary"  placeholder="Enter Last Drawn Basic Pay"  title = "Enter last drawn basic pay">
+        <span class="required">*</span> <!-- The red asterisk --></div>
       <div class="form-group"><label for="dos">Date of Superannuation</label>
-        <input type="date" id="dos" readonly></div>
+        <input type="date" id="dos" readonly>
+        <span class="requiredSp">''</span> <!-- The red asterisk --></div>
        <div class="form-group">
         <label for="years">Age</label>
-        <input type="number" id="txtAge" readonly></div>
+        <input type="number" id="txtAge" readonly>
+         <span class="requiredSp">''</span> <!-- The red asterisk --></div>
       <div class="form-group">
         <label for="years">Years of Service</label>
-        <input type="number" id="years"  readonly> </div>
+        <input type="number" id="years"  readonly>
+         <span class="requiredSp">''</span> <!-- The red asterisk --></div>
        <div class="form-group">
         <label for="years">Increment In The Year of Retirement</label>
-        <input type="number" id="IncyearofRetirement"   > </div>
+        <input type="number" id="IncyearofRetirement"   >
+         <span class="requiredSp">''</span> <!-- The red asterisk --></div>
         <div class="form-group">
         <label for="years">Senior Post Allowance</label>
-        <input type="number" id="txtSpAllowance"   > </div>
+        <input type="number" id="txtSpAllowance"   >
+         <span class="requiredSp">''</span> <!-- The red asterisk --></div>
         <div class="form-group">
-        <label for="penalty">Early Retiremetn Penalty</label>
-        <input type="text" id="txtPenalty"  readonly > </div>
+        <label for="penalty">Early Retirement Penalty</label>
+        <input type="text" id="txtPenalty"  readonly >
+         <span class="requiredSp">''</span> <!-- The red asterisk --></div>
        <div class="form-group">
         <label for="GP">Gross Pension</label>
-        <input type="text" id="txtGP"  readonly > </div>
+        <input type="text" id="txtGP"  readonly >
+         <span class="requiredSp">''</span> <!-- The red asterisk --></div>
         <div class="form-group">
         <label for="MP">Monthly Pension</label>
-        <input type="text" id="monthlyPension"   > </div>
+        <input type="text" id="monthlyPension"   >
+         <span class="requiredSp">''</span> <!-- The red asterisk --></div>
         <div class="form-group">
         <label for="commutattion">Commutation</label>
-        <input type="text" id="commutedValue"  readonly > </div>
+        <input type="text" id="commutedValue"  readonly >
+         <span class="requiredSp">''</span> <!-- The red asterisk --></div>
         <button onclick="calculatePension()">Calculate Pension</button>
-           <div class="result" id="result"></div>
+           <label class="result" >Disclaimer: These calculations are not for presentation before any court of law or Accounts Office</label>
     </div>
 
     <script>
@@ -195,14 +224,10 @@ const increments = [
 
 ];
 
-/**
- * Calculate age based on birth year and get the corresponding rate.
- * @param {number} birthYear - The year of birth.
- * @returns {number | string} - The corresponding rate or an error message.
- */
+
 function getAgeRate(age) {
 
-  // Find the rate for the calculated age
+
   const rateData = ageRates.find((item) => item.age === age);
   if (rateData) {
     return rateData.rate;
@@ -211,16 +236,7 @@ function getAgeRate(age) {
   }
 }
 
-/** Example usage
-const birthYear = 60; // Replace with the desired birth year
-const rate = getAgeRate(birthYear);
-console.log(`The rate for birth year ${birthYear} is: ${rate}`);  */
 
-/**
- * Fetch the increment based on BPS.
- * @param {number} bps - The BPS value.
- * @returns {number | string} - The corresponding increment or an error message.
- */
 function getIncrement(bps) {
   const incrementData = increments.find((item) => item.bps === bps);
 
@@ -242,10 +258,10 @@ function validations(){
             const doa= new Date(cdoa);
             const dor =new Date(cdor);
 
-        if (isNaN(bps) ) {
+        if (isNaN(bps) || (bps <=0 )) {
                 //document.getElementById('result').textContent = 'Please enter valid inputs!';
-                alert("Please enter BPS");
-                           document.getElementById('BPS').focus();
+                alert("Please enter BPS between 1 and 22  " );
+                           document.getElementById('BPS').focus(true);
                 return false;
 		    }
 
@@ -268,8 +284,13 @@ function validations(){
              if (isNaN(salary) ) {
                 //document.getElementById('result').textContent = 'Please enter valid inputs!';
                 alert("Please enter Basic Pay");
-                return false;
-		    }
+                return false; }
+
+                if (salary <=0 ) {
+                    alert("Basic Pay must be more than 0 ");
+                    return false;
+                    }
+
             return true;
 }
  /**
@@ -311,6 +332,10 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
                 alert("Date of appointment can not be before or equal to date of birth");
                 return;
             }
+             if (dor > dos) {
+                alert("The retirement date cannot be after the superannuation date.");
+                return;
+                }
 
             // Calculate Age
             var age = today.getFullYear() - birthDate.getFullYear();
@@ -332,12 +357,7 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
             const retirement = new Date(dor);
             const appointment = new Date(doa);
             var yearsOfService = parseInt(retirement.getFullYear() - appointment.getFullYear() - (retirement < new Date(retirement.getFullYear(), appointment.getMonth(), appointment.getDate()) ? 1 : 0));
-               // document.getElementById('doa').value=yearsOfService;
-           // const retirement = new Date(dor);
-            //const appointment = new Date(doa);
-            //var yearsOfService = parseInt(retirement.getFullYear() - appointment.getFullYear() - (retirement < new Date(retirement.getFullYear(), appointment.getMonth(), appointment.getDate()) ? 1 : 0));
-            //  var yearsOfService = document.getElementById('years').value;
-              if (yearsOfService > 30)
+                  if (yearsOfService > 30)
                    yearsOfService=yearsOfService-30;
                    document.getElementById('years').value = yearsOfService;
 
@@ -352,16 +372,15 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
             var grade= parseInt(document.getElementById('BPS').value);
             if (dor.getMonth()+1 >= 6 && dor.getMonth()+1 <=11) {
 
-
             inc=getIncrement(grade);
 
-            //Find Age Rate for Commutation
             }
             else
             {
                 inc=0;
             }
             document.getElementById('IncyearofRetirement').value=inc;
+            //claculate Senior Post Allowance
             if (grade== 20)
             {
                 spAllowance=1250;
@@ -375,22 +394,24 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
                  spAllowance=1750;
                  else
                  spAllowance=0;
-
-            document.getElementById('txtSpAllowance').value=spAllowance;
-                   const ageRate=getAgeRate(age+1);
+                 document.getElementById('txtSpAllowance').value=spAllowance;
+                 //calculate Age Rate for Commutation
+                 var ageRate=0;
+                 if (age== 60 )
+                    ageRate=getAgeRate(age);
+                    else
+                        ageRate=getAgeRate(age+1);
                    alert(ageRate);
               // Pension Calculations
 
                var GrossPension = salary* yearsOfService* 7/300 ;
-               //GrossPension = GrossPension-(GrossPension*3.27/100);
+               //convert Gross pension into 2 years avg Gross Pension
+               GrossPension = GrossPension-(GrossPension*3.27/100);
+               //add increment in the year of retirement
              GrossPension = GrossPension+inc;
-             if (dor > dos) {
-                alert("The retirement date cannot be after the superannuation date.");
 
-            }
-            else
-            {
 
+            // calculate early retirement penalty
             const yearsDifference = dos.getFullYear() - dor.getFullYear();
             const monthsDifference = (dos.getMonth()+1) - (dor.getMonth()+1);
 
@@ -404,7 +425,7 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
                penalty= (GrossPension *(totalMonths *0.25)/100);
            }
 
-             }
+
 
              document.getElementById('txtPenalty').value=formatNumber(parseInt(penalty));
              GrossPension= GrossPension-penalty;
@@ -454,7 +475,11 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
 
         };   */
 
-        // Change superannuation date on change of date of birth
+        /*// Change superannuation date on change of date of birth
+        /* document.getElementById('dob').addEventListener('blur', function() {
+             validations();
+             this.focus(true);
+             });*/
          document.getElementById('dob').addEventListener('change', function() {
             const dateOfBirth = new Date(this.value);
             if (!isNaN(dateOfBirth)) {
@@ -465,16 +490,18 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
                 document.getElementById('dos').value = formattedDate;
             }
         });
-          document.getElementById('BPS').addEventListener('change', function() {
+        /**
+          document.getElementById('BPS').addEventListener('blur', function() {
 
                 if (     (parseInt(document.getElementById('BPS').value) > 22   )  ||  (parseInt(document.getElementById('BPS').value) < 1   ) )
-                        alert("Enter BPS between 1 and 22");
+                        alert("Please Enter BPS between 1 and 22");
                         document.getElementById('BPS').focus();
+
             }
         );
 
 
-
+         */
 
 
 
