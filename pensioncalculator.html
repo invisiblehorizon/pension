@@ -73,10 +73,10 @@
         <h1>Finance Division's Pension Calculator</h1>
 
     <div class="form-group"><label for="BPS">BPS</label>
-        <input type="number" id="BPS" placeholder="Enter your BPS"  min="1" max="22"></div>
+        <input type="number" id="BPS" placeholder="Enter your BPS"  title = "Enter BPS" min="1" max="22"></div>
 
 	 <div class="form-group"> <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" placeholder="Enter Date of Birthday"></div>
+        <input type="date" id="dob" placeholder="Enter Date of Birth" title = "Enter date of birth"></div>
       <div class="form-group"><label for="dob">Date of Appointment</label>
         <input type="date" id="doa" placeholder="Enter date of Appointment"></div>
       <div class="form-group"><label for="dob">Date of Retirement</label>
@@ -94,6 +94,9 @@
        <div class="form-group">
         <label for="years">Increment In The Year of Retirement</label>
         <input type="number" id="IncyearofRetirement"   > </div>
+        <div class="form-group">
+        <label for="years">Senior Post Allowance</label>
+        <input type="number" id="txtSpAllowance"   > </div>
         <div class="form-group">
         <label for="penalty">Early Retiremetn Penalty</label>
         <input type="text" id="txtPenalty"  readonly > </div>
@@ -279,8 +282,9 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
 
      function calculatePension() {
          if (! validations())
-             return;
+           return;
 
+            var spAllowance=0;
             const salary = parseFloat(document.getElementById('salary').value);
             const years = parseFloat(document.getElementById('years').value);
             const cdob = document.getElementById('dob').value;
@@ -345,9 +349,9 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
             document.getElementById('dos').value = retirementDateString;
             // Find increment in the year of retirement
             dor = new Date(document.getElementById('dor').value);
-
-            if (dor.getMonth()+1 >= 6 && dor.getMonth()+1 <=11) {
             var grade= parseInt(document.getElementById('BPS').value);
+            if (dor.getMonth()+1 >= 6 && dor.getMonth()+1 <=11) {
+
 
             inc=getIncrement(grade);
 
@@ -358,12 +362,27 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
                 inc=0;
             }
             document.getElementById('IncyearofRetirement').value=inc;
-            const ageRate=getAgeRate(age+1);
+            if (grade== 20)
+            {
+                spAllowance=1250;
+            }
+            else
+            if (grade==21)
 
+                    spAllowance=1350;
+            else
+             if (grade==22)
+                 spAllowance=1750;
+                 else
+                 spAllowance=0;
+
+            document.getElementById('txtSpAllowance').value=spAllowance;
+                   const ageRate=getAgeRate(age+1);
+                   alert(ageRate);
               // Pension Calculations
 
-               var GrossPension = ((salary- (salary *3.27/100))* yearsOfService* 7/300 );
-
+               var GrossPension = salary* yearsOfService* 7/300 ;
+               //GrossPension = GrossPension-(GrossPension*3.27/100);
              GrossPension = GrossPension+inc;
              if (dor > dos) {
                 alert("The retirement date cannot be after the superannuation date.");
@@ -397,6 +416,7 @@ console.log(`The increment for BPS ${bps} is: ${increment}`);
                       MonthlyPension=MonthlyPension + (MonthlyPension*15/100) ; //2022
                       MonthlyPension=MonthlyPension + (MonthlyPension*17.5/100) ; //2023
                       MonthlyPension=MonthlyPension + (MonthlyPension*15/100) ; //2011
+                      alert((GrossPension*35/100));
 		    const Commutation= (GrossPension*35/100) * 12* ageRate;
             document.getElementById('monthlyPension').value=formatNumber(parseInt(MonthlyPension));
             var x =formatNumber(parseInt(Commutation));
